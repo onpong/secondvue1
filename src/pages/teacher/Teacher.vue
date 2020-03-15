@@ -119,10 +119,10 @@ export default {
 		}).catch((error) => {
             console.log(error.response.data.code)
             if (error.response.data.code=='E_PASSWORD_WRONG'){
-            this.$message.error('原密码输入错误');     
+            this.$message.error('原密码输入错误.');     
             }
              if (error.response.data.code=='E_CHECKPASSWORD_WRONG'){
-            this.$message.error('两次密码输入不一致');     
+            this.$message.error('两次密码输入不一致,请重新输入!');     
             }
 
             
