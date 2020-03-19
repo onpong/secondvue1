@@ -2,7 +2,7 @@
   <div class="course">
       <div class="course-title">
         <span  class="course-title-icon"></span>
-        <span  class="course-title-text">分组列表</span>
+        <span  class="course-title-text">学院与年级</span>
       </div>
       <div class="course-table">
         <el-table

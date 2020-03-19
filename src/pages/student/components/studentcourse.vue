@@ -5,7 +5,6 @@
                 <span  class="teacher-details-title-text">
                     <el-breadcrumb separator="/">
                         <el-breadcrumb-item :to="{ path: '/courselist' }">课程列表</el-breadcrumb-item>
-                        <el-breadcrumb-item>已创建课程</el-breadcrumb-item>
                         <el-breadcrumb-item>课程详情</el-breadcrumb-item>
                     </el-breadcrumb>
                 </span>
@@ -33,8 +32,9 @@
                           <el-form-item label="轮数:" placeholder="请输入内容" >
                               {{form.ground}}
                           </el-form-item>
-                          <el-form-item label="自我介绍:">
+                          <el-form-item label="自我介绍:"  >
                               <quill-editor 
+                              class="ql-editor-class"
                                     ref="editor1"
                                 v-model="form.description"
                                 :options="editorOption"
@@ -63,9 +63,11 @@
                 editorOption: {
          theme: 'snow',
       boundary: document.body, 
+      placeholder: "",
       modules: {
         toolbar: [
-          
+          ['bold'],
+          [{ 'size': ['small', false, 'large', 'huge'] }],
         ],
             
       },
@@ -126,8 +128,17 @@
 </script>
 
 <style >
-.ql-editor{
-        height:800px;
+    .ql-editor-class {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        line-height: 1.42;
+        height: 800px;
+        outline: none;
+        padding: 0 !important;
+        tab-size: 4;
+        -moz-tab-size: 4;
+        text-align: left;
+        word-wrap: break-word;
     }
 .teacher-details{
     width:100%;

@@ -35,9 +35,7 @@
       <el-aside width="280px">
         <div class="aside-inner" >
           <div class="aside-inner-icon">
-            <h>
-              此处放杭电校章
-            </h>
+            <el-image src='./static/hangdian.jpg' class="aside-inner-icon-img"></el-image>
           </div>
           <div class="aside-inner-navmenu">
                <el-menu
@@ -221,6 +219,11 @@ html,body,.el-container{
       height:100%;
       background-color: white;
       box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+    }
+    .aside-inner-icon-img{
+      position: relative;
+      top:40px;
+      width:50%
     }
       .aside-inner-icon{
         line-height:80px;

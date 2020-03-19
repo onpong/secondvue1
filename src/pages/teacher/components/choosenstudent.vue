@@ -2,14 +2,15 @@
     <div class="student-list">
            <div class="student-list-title">
                 <span  class="student-list-title-icon"></span>
-                <span  class="student-list-title-text">分组列表-已创建课程-学生列表-已选择学生</span>
+                <span  class="student-list-title-text">学院年级-分组列表-学生列表-已选择学生</span>
                 <ul class="nav">
                     <li class="nav-choosen">
                     <el-dropdown size="small" split-button  >
-                        已选/未选
+                        返回选择页面
                         <el-dropdown-menu slot="dropdown" >
-                            <el-dropdown-item @click.native="gotochoosen">已选择学生</el-dropdown-item>
-                            <el-dropdown-item @click.native="gotounchoosen">未选择学生</el-dropdown-item>
+                            <el-dropdown-item @click.native="gotoroun1">返回第一轮选择页面</el-dropdown-item>
+                            <el-dropdown-item @click.native="gotoroun2">返回第二轮选择页面</el-dropdown-item>
+                            <el-dropdown-item @click.native="gotoroun3">返回第三轮选择页面</el-dropdown-item>
                         </el-dropdown-menu>
                         </el-dropdown>
                     </li>
@@ -33,6 +34,10 @@
                  <el-table-column
                     prop="gender"
                     label="性别">
+                </el-table-column>
+                <el-table-column
+                    prop="round"
+                    label="轮数">
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
@@ -63,13 +68,19 @@
                       let studentid = row.studentId
                       this.$router.push({name: "studentdetails", params: {courseid,studentid}});
           },
-      gotounchoosen(){
+      gotoroun1(){
           const courseid=this.$route.params.id
-          this.$router.push({name:'studentlist',params:{courseid}})
+          this.$router.push({name:'round1',params:{courseid}})
       },
-      gotochoosen(){
-           this.$message('你已经处在已选择学生页面');
-      }
+      gotoroun2(){
+          const courseid=this.$route.params.id
+          this.$router.push({name:'round2',params:{courseid}})
+      },
+      gotoroun3(){
+          const courseid=this.$route.params.id
+          this.$router.push({name:'round3',params:{courseid}})
+      },
+     
           },
     created(){
         this.id=this.$route.params.id
@@ -77,7 +88,6 @@
             method:'get',
             url:'api/v1/teacher/courses/'+this.id+'/students',
             params:{
-                round:1,
                 page:0,
                 size:20,
                  type:1

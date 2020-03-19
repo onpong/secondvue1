@@ -15,13 +15,7 @@
                         <el-button @click="speedupCheckbox" size="small">确认选择</el-button>
                     </li>
                     <li class="nav-choosen">
-                    <el-dropdown size="small" split-button  >
-                        已选/未选
-                        <el-dropdown-menu slot="dropdown" >
-                            <el-dropdown-item @click.native="gotochoosen">已选择学生</el-dropdown-item>
-                            <el-dropdown-item @click.native="gotounchoosen">未选择学生</el-dropdown-item>
-                        </el-dropdown-menu>
-                        </el-dropdown>
+                    <el-button @click="handleClick1"  size="small">查看已选择学生</el-button>
                     </li>
                 </ul>
             </div>
@@ -72,7 +66,7 @@
 </template>
 <script >
     export default {
-        name:"studentlist",
+        name:"round1",
         data(){
             return {
                 list:[],
@@ -88,11 +82,11 @@
                       let round = row.round
                       this.$router.push({name: "studentdetails", params: {ccourseid,studentid,round}});
           },
-            gotochoosen(){
+            handleClick1(){
                 let id=this.$route.params.courseid
                 this.$router.push({name:'choosenstudent', params: {id}})
             },
-            gotounchoosen(){
+            gotounchoosen(){    
                 this.$message('你已经处在未选择学生页面');
             },
            handleSelectionChange(val) {
@@ -170,7 +164,7 @@
             method:'get',
             url:'api/v1/teacher/courses/'+this.courseid+'/students',
             params:{
-                round:this.$route.params.round,
+                round:1,
                 page:0,
                 size:20,
                 type:0

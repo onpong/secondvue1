@@ -67,7 +67,7 @@ export default {
      
 
                         }).catch((error) => {
-        alert('错误');
+        
           
 		});
         }

@@ -88,11 +88,33 @@
 							
                         }})
                         .then((res)=>{
-                            alert('选择成功')
+                            this.$message({
+          message: '选择成功',
+          type: 'success'
+        });
      
 
                         }).catch((error) => {
-        alert('错误');
+                          if(row.status === 0){
+                            this.$message({
+          message: '本轮导师选择还未开始',
+          type: 'warning'
+        });
+                          }
+                          if(row.status === 2){
+                            this.$message({
+          message: '本轮导师选择已经结束',
+          type: 'warning'
+        });
+                          }
+                          else{
+                            this.$message({
+          message: '你已经被导师选择',
+          type: 'warning'
+        });
+                          }
+
+
           
 		});	
           }

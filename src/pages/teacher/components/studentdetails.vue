@@ -44,10 +44,13 @@
         },
         created(){
             this.studentid=this.$route.params.studentid
-            this.courseid=this.$route.params.courseid
+            this.scourseid=this.$route.params.ccourseid
         this.$axios({
             methods:'get',
-            url:'api/v1/teacher/courses/'+this.courseid+'/students/'+this.studentid,
+            url:'api/v1/teacher/courses/'+this.scourseid+'/students/'+this.studentid,
+            params:{
+                round:this.$route.params.round,
+            },
             
         headers:{
 

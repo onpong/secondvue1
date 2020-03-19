@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import Login from '@/pages/login/Login'
 import Teacher from '@/pages/teacher/Teacher'
 import courseheader from '@/pages/teacher/components/courseheader'
-import studentlist from '@/pages/teacher/components/studentlist'
+import round1 from '@/pages/teacher/components/round1'
+import round2 from '@/pages/teacher/components/round2'
+import round3 from '@/pages/teacher/components/round3'
 import finishcourse from '@/pages/teacher/components/finishcourse'
 import showpersonal from '@/pages/teacher/components/showpersonal'
 import changepic from '@/pages/teacher/components/changepic'
@@ -46,7 +48,7 @@ const router = new Router({
           component:choosenstudent,
 
           },
-          {path:'/studentdetails//:courseid/:studentid',
+          {path:'/studentdetails//:ccourseid/:studentid/:round',
           name:'studentdetails',
           component:studentdetails,
 
@@ -63,9 +65,21 @@ const router = new Router({
         component:finishcourse,
       },
       {
-        path:'/studentlist//:courseid/:round/:limit',
-        name:'studentlist',
-        component:studentlist,
+        path:'/round1//:courseid/:round/:limit',
+        name:'round1',
+        component:round1,
+        
+      },
+      {
+        path:'/round2//:courseid/:round/:limit',
+        name:'round2',
+        component:round2,
+        
+      },
+      {
+        path:'/round3//:courseid/:round/:limit',
+        name:'round3',
+        component:round3,
         
       },
       

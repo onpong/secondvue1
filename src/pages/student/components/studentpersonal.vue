@@ -58,7 +58,10 @@
 							
                         }})
                         .then((res)=>{
-                            alert('添加成功')
+                            this.$message({
+          message: '保存成功',
+          type: 'success'
+        });
      
 
                         }).catch((error) => {

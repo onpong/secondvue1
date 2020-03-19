@@ -35,7 +35,7 @@
                         </el-upload>
                         <el-row v-loading="quillUpdateImg"></el-row>
                 <quill-editor 
-                 class="editor"
+                 class="ql-editor-class"
                 ref="myQuillEditor"
               v-model="form.description"
               :options="editorOption"
@@ -43,9 +43,9 @@
           </quill-editor>
      
             </el-form-item>
-            <el-form-item>
-                <el-button :plain="true" type="primary" @click="save()">立即保存</el-button>
-            </el-form-item>
+         
+                <el-button :plain="true" type="primary" @click="save()" class="isave">立即保存</el-button>
+          
 </el-form>
     </div>
     <div class="personal-pic">
@@ -275,12 +275,24 @@ const titleConfig=[
 
 </script>
 <style>
-    .ql-editor{
-        height:800px;
+    .ql-editor-class{
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        line-height: 1.42;
+        height: 800px;
+        outline: none;
+        padding: 0 !important;
+        tab-size: 4;
+        -moz-tab-size: 4;
+        text-align: left;
+        word-wrap: break-word;
     }
 </style>
 <style scoped>
-
+    .isave{
+        position:relative;
+        left:80px
+    }
     .personal{
         width:100%;
         height:100%;

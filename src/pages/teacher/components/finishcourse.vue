@@ -4,8 +4,8 @@
         <span  class="fncourse-title-icon"></span>
         <span  class="fncourse-title-text">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/courseheader' }">分组列表</el-breadcrumb-item>
-            <el-breadcrumb-item>以创建课程</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/courseheader' }">学院年级</el-breadcrumb-item>
+            <el-breadcrumb-item>分组列表</el-breadcrumb-item>
           </el-breadcrumb>
         </span>
       </div>
@@ -39,9 +39,17 @@
           <el-table-column
             fixed="right"
             label="操作"
-            width="100">
+            width="200">
             <template slot-scope="scope">
-              <el-button @click="handleClick1(scope.$index,scope.row)" type="text" size="small">查看学生</el-button>
+              <!--<el-button @click="handleClick1(scope.$index,scope.row)" type="text" size="small">查看学生</el-button>-->
+              <el-dropdown size="small" split-button  >
+                        查看对应轮次
+                        <el-dropdown-menu slot="dropdown" >
+                            <el-dropdown-item @click.native="gotoround1(scope.$index,scope.row)">第一轮</el-dropdown-item>
+                            <el-dropdown-item @click.native="gotoround2(scope.$index,scope.row)">第二轮</el-dropdown-item>
+                            <el-dropdown-item @click.native="gotoround3(scope.$index,scope.row)">第三轮</el-dropdown-item>
+                        </el-dropdown-menu>
+                        </el-dropdown>
             </template>
           </el-table-column>
         </el-table>
@@ -60,14 +68,31 @@
         },
         methods:{
      
-          handleClick1(index,row){
-                      this.id = row.id;
+         /* handleClick1(index,row){
                       const courseid = row.id;
                       const round = row.ground
                       const limit = row.limit
                       this.$router.push({name: "studentlist", params: {courseid,round,limit}});
                       
-          }
+          }*/
+          gotoround1(index,row){
+                      const courseid = row.id;
+                      const round = row.ground
+                      const limit = row.limit
+                      this.$router.push({name: "round1", params: {courseid,round,limit}});
+          },
+          gotoround2(index,row){
+                      const courseid = row.id;
+                      const round = row.ground
+                      const limit = row.limit
+                      this.$router.push({name: "round2", params: {courseid,round,limit}});
+          },
+          gotoround3(index,row){
+                      const courseid = row.id;
+                      const round = row.ground
+                      const limit = row.limit
+                      this.$router.push({name: "round3", params: {courseid,round,limit}});
+          },
      
     
     },
@@ -107,7 +132,7 @@
       border-bottom: 1px solid #ddd
     }
     .fncourse-table{
-      width:70%;
+      width:75%;
       padding:20px;
       line-height: 10px;
     }
