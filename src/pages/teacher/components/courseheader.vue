@@ -4,10 +4,13 @@
         <span  class="course-title-icon"></span>
         <span  class="course-title-text">学院与年级</span>
       </div>
-      <div class="course-table">
+      <div class="course-table"   >
         <el-table
+        v-infinite-scroll="load" 
+        infinite-scroll-disabled="disabled"
+        infinite-scroll-distance="0px"
+          border
           :data="tableData"
-          stripe
           style="width: 100%">
           <el-table-column
             prop="academy"
@@ -32,22 +35,89 @@
             </template>
           </el-table-column>
         </el-table>
+        <p v-if="loading">加载中...</p>
+         <p v-if="noMore"></p>
       </div>
+       <!--<el-pagination 
+                @size-change="handleSizeChange" 
+                @current-change="handleCurrentChange" 
+                :current-page="currentPage" 
+                :page-sizes="[4,8]" 
+                :page-size="pagesize" 
+                layout="total, sizes,prev, pager, next" 
+                :total="size" 
+                prev-text="上一页" 
+                next-text="下一页">
+            </el-pagination>-->
+        
   </div>
 
       
 </template>
 <script >
+
     export default {
         name:"courseheader",
         data(){
             return {
-              tableData: []
-                  
+              tableData: [],
+              page:1,
+              size:0,
+              pagesize:8,
+              loading: false,
+              totalPages: "",//取后端返回内容的总页数
+             
+               
               
             }
         },
+
+        created(){
+    this.getmessage();
+    },
         methods: {
+          load() {
+      //滑到底部时进行加载
+      this.loading = true;
+      setTimeout(() => {
+        this.page += 1; //页数+1
+        this.getmessage(); //调用接口，此时页数+1，查询下一页数据
+        console.log('hello')
+      }, 2000);
+    },
+         getmessage(){ 
+           this.$axios({
+            methods:'get',
+            url:'api/v1/teacher/groups',
+            params:{
+              page:this.page,
+              size:8,
+            },
+           
+        headers:{
+
+            'Authorization':localStorage.getItem('token'),'Content-Type':'application/json'
+        }
+        }).then((res)=>{       
+            this.tableData=this.tableData.concat(res.data.groups)
+            this.totalPages = Math.ceil(res.data.count/8)
+            this.loading = false;
+            
+
+        }).catch((error) => {
+            console.log(error)
+            alert('错误')
+          
+    });	
+    },
+          /*handleSizeChange: function(size) {
+                this.pagesize = size;
+                /*console.log(this.pagesize) 
+            },
+             handleCurrentChange: function(currentPage) {
+                this.currentPage = currentPage;
+                console.log(this.currentPage) 
+            },*/
           handleClick(index,row){
                       this.id = row.id;
                       const groupid = row.id;
@@ -55,24 +125,18 @@
           }
      
     },
-    created(){
-      this.$axios({
-            methods:'get',
-            url:'api/v1/teacher/groups',
-        headers:{
-
-            'Authorization':localStorage.getItem('token'),'Content-Type':'application/json'
-        }
-        }).then((res)=>{    
-            console.log(res.data)
-            this.tableData=res.data
-
-        }).catch((error) => {
-            console.log(error)
-            alert('错误')
-          
-		});	
+     computed: {
+    noMore() {
+      //当起始页数大于总页数时停止加载
+      
+      return this.page >= this.totalPages
+    },
+    disabled() {
+      return this.loading || this.noMore;
     }
+  },
+    
+    
     }
 </script>
 <style scoped>
@@ -88,8 +152,11 @@
     }
     .course-table{
       width:70%;
+      height:500px;
       padding:20px;
       line-height: 10px;
+      overflow-y: auto;
+      
     }
       .course-title-icon{
         float: left;
@@ -107,5 +174,17 @@
         cursor: default;
         line-height: 25px;
       }
+      /*.el-pagination{
+        position: absolute;
+        height:50px;
+        bottom: 0px;
+        left:400px;
+        line-height:10px
+      }
+      .el-pager{
+        height:50px;
+        line-height:10px
+      }*/
+      
  
 </style>

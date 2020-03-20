@@ -5,7 +5,6 @@
         <span  class="fncourse-title-text">
           <el-breadcrumb separator="/">
             <el-breadcrumb-item :to="{ path: '/courseheader' }">学院年级</el-breadcrumb-item>
-            <el-breadcrumb-item>分组列表</el-breadcrumb-item>
           </el-breadcrumb>
         </span>
       </div>
@@ -42,9 +41,9 @@
             width="200">
             <template slot-scope="scope">
               <!--<el-button @click="handleClick1(scope.$index,scope.row)" type="text" size="small">查看学生</el-button>-->
-              <el-dropdown size="small" split-button  >
+              <el-dropdown size="small" split-button trigger="click" >
                         查看对应轮次
-                        <el-dropdown-menu slot="dropdown" >
+                        <el-dropdown-menu slot="dropdown"  >
                             <el-dropdown-item @click.native="gotoround1(scope.$index,scope.row)">第一轮</el-dropdown-item>
                             <el-dropdown-item @click.native="gotoround2(scope.$index,scope.row)">第二轮</el-dropdown-item>
                             <el-dropdown-item @click.native="gotoround3(scope.$index,scope.row)">第三轮</el-dropdown-item>
@@ -54,6 +53,7 @@
           </el-table-column>
         </el-table>
       </div>
+
   </div>
 </template>
 <script >
@@ -62,6 +62,7 @@
         data(){
             return {
                         list:[],
+
                         groupid:'',
                       
         }
@@ -75,6 +76,14 @@
                       this.$router.push({name: "studentlist", params: {courseid,round,limit}});
                       
           }*/
+          handleSizeChange: function(size) {
+                this.pagesize = size;
+                /*console.log(this.pagesize) */
+            },
+             handleCurrentChange: function(currentPage) {
+                this.currentPage = currentPage;
+                /*console.log(this.currentPage) */
+            },
           gotoround1(index,row){
                       const courseid = row.id;
                       const round = row.ground
@@ -155,7 +164,17 @@
       .el-breadcrumb{
         line-height: 23px;
       }
-
+      .el-pagination{
+        position: absolute;
+        height:50px;
+        bottom: 0px;
+        left:400px;
+        line-height:10px
+      }
+      .el-pager{
+        height:50px;
+        line-height:10px
+      }
   
  
 </style>

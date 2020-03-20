@@ -5,7 +5,6 @@
                 <span  class="student-list-title-text">
                     <el-breadcrumb separator="/">
                         <el-breadcrumb-item :to="{ path: '/courseheader' }">学院年级</el-breadcrumb-item>
-                        <el-breadcrumb-item :to="{ path: '/finishcourse/:groupid' }">分组列表</el-breadcrumb-item>
                         <el-breadcrumb-item >学生列表</el-breadcrumb-item>
                         <el-breadcrumb-item >未选择学生</el-breadcrumb-item>
                     </el-breadcrumb>
@@ -21,6 +20,9 @@
             </div>
            <div class="student-list-table">
                 <el-table
+                v-infinite-scroll="load" 
+        infinite-scroll-disabled="disabled"
+        infinite-scroll-distance="0px"
                 ref="multipleTable"
                 :data="list"
                 tooltip-effect="dark"
@@ -57,11 +59,10 @@
                     </template>
                     </el-table-column>
                 </el-table>
-          </div>
-         
-                
-                
             
+          </div>
+           <p v-if="loading">加载中...</p>
+         <p v-if="noMore"></p>
        </div>
 </template>
 <script >
@@ -71,20 +72,37 @@
             return {
                 list:[],
                 multipleSelection:[],
-                
+              page:1,
+              size:0,
+              loading: false,
+              totalPages: "",//取后端返回内容的总页数
                 
             }
         },
+        created(){
+            
+            this.getmessage();
+        },
         methods:{
+         
+          handleClick(index,row){
+                      this.id = row.id;
+                      const groupid = row.id;
+                      this.$router.push({name: "finishcourse", params: {groupid}});
+          },
+     
              searchdetails(index,row){
                       let ccourseid = this.$route.params.courseid;
                       let studentid = row.studentId
                       let round = row.round
                       this.$router.push({name: "studentdetails", params: {ccourseid,studentid,round}});
           },
-           handleClick1(){
+            handleClick1(){
                 let id=this.$route.params.courseid
                 this.$router.push({name:'choosenstudent', params: {id}})
+            },
+            gotounchoosen(){    
+                this.$message('你已经处在未选择学生页面');
             },
            handleSelectionChange(val) {
             this.multipleSelection = val;
@@ -152,34 +170,55 @@
             this.speedupData();
         }
     },
-        
-        },
-        created(){
-            
-            this.courseid=this.$route.params.courseid
+     load() {
+      //滑到底部时进行加载
+      this.loading = true;
+      setTimeout(() => {
+        this.page += 1; //页数+1
+        this.getmessage(); //调用接口，此时页数+1，查询下一页数据
+        console.log('hello')
+      }, 2000);
+    },
+         getmessage(){ 
+           this.courseid=this.$route.params.courseid
         this.$axios({
             method:'get',
             url:'api/v1/teacher/courses/'+this.courseid+'/students',
             params:{
+                page:this.page,
+                size:8,
                 round:3,
-                page:0,
-                size:20,
                 type:0
             },
         headers:{
 
             'Authorization':localStorage.getItem('token'),
         }
-        }).then((res)=>{    
-            console.log(res.data.students)
-            this.list=res.data.students
+        }).then((res)=>{
+            this.list=this.list.concat(res.data.students)
+            this.totalPages = Math.ceil(res.data.count/8)
+            this.loading = false;
+            console.log(this.totalPages)
 
         }).catch((error) => {
             console.log(error)
-            alert('错误')
+            alert('暂无数据')
           
 		});	
-        }
+    },
+        
+        },
+       
+        computed: {
+    noMore() {
+      //当起始页数大于总页数时停止加载
+      
+      return this.page >= this.totalPages
+    },
+    disabled() {
+      return this.loading || this.noMore;
+    }
+  },
     }
 </script>
 <style >
@@ -211,8 +250,10 @@
         }
     .student-list-table{
        width:70%;
+       height:500px;
       padding:20px;
       line-height: 10px;
+      overflow-y: auto;
     }
     .nav{
         float: right;
@@ -242,7 +283,17 @@
     cursor: pointer;
     line-height: 50px;
     }
-   
+   .el-pagination{
+        position: absolute;
+        height:50px;
+        bottom: 0px;
+        left:400px;
+        line-height:10px
+      }
+      .el-pager{
+        height:50px;
+        line-height:10px
+      }
     
     
   

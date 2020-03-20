@@ -6,8 +6,10 @@
       </div>
       <div class="course-table">
         <el-table
+        v-infinite-scroll="load" 
+        infinite-scroll-disabled="disabled"
+        border
           :data="tableData"
-          stripe
           style="width: 100%">
           <el-table-column
             prop="academy"
@@ -52,6 +54,8 @@
           </el-table-column>
         </el-table>
       </div>
+       <p v-if="loading">加载中...</p>
+         <p v-if="noMore"></p>
   </div>
 
       
@@ -61,12 +65,21 @@
         name:"courselist",
         data(){
             return {
-              tableData: []
+               tableData: [],
+              page:1,
+              size:0,
+              pagesize:8,
+              loading: false,
+              totalPages: "",//取后端返回内容的总页数
                   
               
             }
         },
+        created(){
+    this.getmessage();
+    },
         methods: {
+           
           formatSex: function (row, column) {
       return row.status === 0 ? '准备中' : row.status === 1 ? '进行中' : row.status === 2 ? '已结束':'未知'
 },
@@ -117,27 +130,53 @@
 
           
 		});	
-          }
-     
+          },
+          load() {
+      //滑到底部时进行加载
+      this.loading = true;
+      setTimeout(() => {
+        this.page += 1; //页数+1
+        this.getmessage(); //调用接口，此时页数+1，查询下一页数据
+        console.log('hello')
+      }, 2000);
     },
-    created(){
-      this.$axios({
+          getmessage(){ 
+           this.$axios({
             methods:'get',
             url:'api/v1/student/courses',
+            params:{
+              page:this.page,
+              size:5,
+            },
         headers:{
 
             'Authorization':localStorage.getItem('token'),'Content-Type':'application/json'
         }
         }).then((res)=>{    
-            console.log(res.data)
-            this.tableData=res.data
+            this.tableData=this.tableData.concat(res.data.courses)
+            this.totalPages = Math.ceil(res.data.count/5)
+            this.loading = false;
 
         }).catch((error) => {
             console.log(error)
             alert('错误')
           
-		});	
+		});
+    },
+     
+    },
+    computed: {
+    noMore() {
+      //当起始页数大于总页数时停止加载
+      
+      return this.page >= this.totalPages
+    },
+    disabled() {
+      return this.loading || this.noMore;
     }
+  },
+    
+    
     }
 </script>
 <style scoped>
@@ -152,9 +191,11 @@
       border-bottom: 1px solid #ddd
     }
     .course-table{
-      width:90%;
+      width:100%;
+      height:500px;
       padding:20px;
       line-height: 10px;
+      overflow-y: auto;
     }
       .course-title-icon{
         float: left;
@@ -172,5 +213,7 @@
         cursor: default;
         line-height: 25px;
       }
+      
+ 
  
 </style>
