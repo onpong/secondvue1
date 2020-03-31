@@ -51,11 +51,9 @@
     <div class="personal-pic">
         
                 <el-image  v-if="this.form.pic" class="head-img" :src="this.form.pic"  ></el-image>
-                <!--<el-upload class="img-btn" action="#"
-    :show-file-list="false"  :before-upload="beforeAvatarUpload"
-    :http-request="uploadImg">
-    <el-button type="success" plain round size="mini" class="img-button">更改头像</el-button></el-upload>
-            -->
+                
+                <el-button type="success" plain round size="mini" class="img-button" @click="gotochangepic">更改头像</el-button>
+          
         
     </div>
 </div>
@@ -171,6 +169,9 @@ const titleConfig=[
             }
         },
          methods: {
+             gotochangepic(){
+                this.$router.push('/changepic')
+             },
              onEditorChange() {
       //内容改变事件
       this.$emit("input", this.form.description);
@@ -360,8 +361,8 @@ const titleConfig=[
         height:30px;
         position:absolute;
         right:40px;
-        top:10px;
-        z-index:100;
+        top:230px;
+        
         
        }
 

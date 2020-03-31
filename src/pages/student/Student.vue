@@ -30,7 +30,7 @@
 
       </div>
     </el-header>
-     <el-divider></el-divider>
+     <el-divider class='my-divider'></el-divider>
     <el-container>
       <el-aside width="280px">
         <div class="aside-inner" >
@@ -181,7 +181,7 @@ html,body,.el-container{
         /*统一设置高度为100%*/
         height: 100%;
     }
-  .el-divider{
+  .my-divider{
     margin: 0px
   }
   .el-header {

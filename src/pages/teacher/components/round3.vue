@@ -4,8 +4,7 @@
                 <span  class="student-list-title-icon"></span>
                 <span  class="student-list-title-text">
                     <el-breadcrumb separator="/">
-                        <el-breadcrumb-item :to="{ path: '/courseheader' }">学院年级</el-breadcrumb-item>
-                        <el-breadcrumb-item >学生列表</el-breadcrumb-item>
+                        <el-breadcrumb-item :to="{ path: '/courseheader' }">学院与年级</el-breadcrumb-item>
                         <el-breadcrumb-item >未选择学生</el-breadcrumb-item>
                     </el-breadcrumb>
                 </span>
@@ -186,7 +185,7 @@
             url:'api/v1/teacher/courses/'+this.courseid+'/students',
             params:{
                 page:this.page,
-                size:8,
+                size:20,
                 round:3,
                 type:0
             },
@@ -196,7 +195,7 @@
         }
         }).then((res)=>{
             this.list=this.list.concat(res.data.students)
-            this.totalPages = Math.ceil(res.data.count/8)
+            this.totalPages = Math.ceil(res.data.count/20)
             this.loading = false;
             console.log(this.totalPages)
 

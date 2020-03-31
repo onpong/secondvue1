@@ -34,7 +34,7 @@
       </div>
   
     </el-header>
-     <el-divider></el-divider>
+     <el-divider class="my-divider"></el-divider>
     <el-container>
       <el-aside width="280px">
         <div class="aside-inner" >
@@ -53,9 +53,6 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="1-1">查看个人信息</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group>
-          <el-menu-item index="1-2">更改个人头像</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="2">
@@ -184,7 +181,7 @@ html,body,.el-container{
         /*统一设置高度为100%*/
         height: 100%;
     }
-  .el-divider{
+  .my-divider{
     margin: 0px
   }
   .el-header {
@@ -205,6 +202,14 @@ html,body,.el-container{
     width:100px
 
   }
+    .el-dialog__body{
+          padding: 30px 20px;
+    color: #606266;
+    font-size: 14px;
+    word-break: break-all;
+    height: 160px;
+    width: 95%;
+    }
 
   .logout{
    
@@ -241,7 +246,8 @@ html,body,.el-container{
     }
       .aside-inner-navmenu{
         height:230px;
-        float: left;
+        
+        
         
       }
      

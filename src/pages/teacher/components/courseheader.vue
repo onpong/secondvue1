@@ -38,17 +38,7 @@
         <p v-if="loading">加载中...</p>
          <p v-if="noMore"></p>
       </div>
-       <!--<el-pagination 
-                @size-change="handleSizeChange" 
-                @current-change="handleCurrentChange" 
-                :current-page="currentPage" 
-                :page-sizes="[4,8]" 
-                :page-size="pagesize" 
-                layout="total, sizes,prev, pager, next" 
-                :total="size" 
-                prev-text="上一页" 
-                next-text="下一页">
-            </el-pagination>-->
+      
         
   </div>
 
@@ -91,7 +81,7 @@
             url:'api/v1/teacher/groups',
             params:{
               page:this.page,
-              size:8,
+              size:20,
             },
            
         headers:{
@@ -100,7 +90,7 @@
         }
         }).then((res)=>{       
             this.tableData=this.tableData.concat(res.data.groups)
-            this.totalPages = Math.ceil(res.data.count/8)
+            this.totalPages = Math.ceil(res.data.count/20)
             this.loading = false;
             
 

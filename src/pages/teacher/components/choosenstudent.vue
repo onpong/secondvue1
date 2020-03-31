@@ -2,7 +2,7 @@
     <div class="student-list">
            <div class="student-list-title">
                 <span  class="student-list-title-icon"></span>
-                <span  class="student-list-title-text">学院年级-分组列表-学生列表-已选择学生</span>
+                <span  class="student-list-title-text">学院年级-学生列表-已选择学生</span>
                 <ul class="nav">
                     <li class="nav-choosen">
                    <!-- <el-dropdown size="small" split-button  >
@@ -96,7 +96,7 @@
             url:'api/v1/teacher/courses/'+this.id+'/students',
             params:{
                 page:this.page,
-                size:2,
+                size:20,
                  type:1
             },
         headers:{
@@ -106,7 +106,7 @@
         }).then((res)=>{    
 
             this.list=this.list.concat(res.data.students)
-            this.totalPages = Math.ceil(res.data.count/2)
+            this.totalPages = Math.ceil(res.data.count/20)
             this.loading = false;
             console.log(this.totalPages)
 

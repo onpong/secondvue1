@@ -8,6 +8,7 @@
         <el-table
         v-infinite-scroll="load" 
         infinite-scroll-disabled="disabled"
+        infinite-scroll-distance="0px"
         border
           :data="tableData"
           style="width: 100%">
@@ -32,7 +33,7 @@
           </el-table-column>
           <el-table-column
             prop="status"
-            label="轮数状态"
+            label="状态"
             :formatter="formatSex">
           </el-table-column>
           <el-table-column
@@ -46,10 +47,12 @@
           <el-table-column
             fixed="right"
             label="操作"
-            width="100">
+            width="200">
             <template slot-scope="scope">
               <el-button @click="handleClick2(scope.$index,scope.row)" type="text" size="small">查看课程详情</el-button>
-              <el-button @click="handleClick3(scope.$index,scope.row)" type="text" size="small">选择此课程</el-button>
+              <el-button @click="handleClick3(scope.$index,scope.row)" type="text" size="small" 
+               :disabled="scope.row.status===0?true:scope.row.status===2?true:false"
+              >选择此课程</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -81,7 +84,7 @@
         methods: {
            
           formatSex: function (row, column) {
-      return row.status === 0 ? '准备中' : row.status === 1 ? '进行中' : row.status === 2 ? '已结束':'未知'
+      return row.status === 0 ? '尚未开始' : row.status === 1 ? '进行中' : row.status === 2 ? '已结束':'未知'
 },
           handleClick2(index,row){
                       this.id = row.CourseId;
@@ -108,12 +111,6 @@
      
 
                         }).catch((error) => {
-                          if(row.status === 0){
-                            this.$message({
-          message: '本轮导师选择还未开始',
-          type: 'warning'
-        });
-                          }
                           if(row.status === 2){
                             this.$message({
           message: '本轮导师选择已经结束',
@@ -146,15 +143,16 @@
             url:'api/v1/student/courses',
             params:{
               page:this.page,
-              size:5,
+              size:20,
             },
         headers:{
 
             'Authorization':localStorage.getItem('token'),'Content-Type':'application/json'
         }
-        }).then((res)=>{    
+        }).then((res)=>{
+            console.log(res.data.courses)    
             this.tableData=this.tableData.concat(res.data.courses)
-            this.totalPages = Math.ceil(res.data.count/5)
+            this.totalPages = Math.ceil(res.data.count/20)
             this.loading = false;
 
         }).catch((error) => {
@@ -191,11 +189,11 @@
       border-bottom: 1px solid #ddd
     }
     .course-table{
-      width:100%;
+      width:90%;
       height:500px;
       padding:20px;
       line-height: 10px;
-      overflow-y: auto;
+      display:inline-block;    
     }
       .course-title-icon{
         float: left;

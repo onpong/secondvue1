@@ -1,17 +1,17 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
-import router from './router'
 import ElementUI from 'element-ui';
-import Vuex from 'vuex'
 import 'element-ui/lib/theme-chalk/index.css';
+import Vuex from 'vuex'
 import axios from 'axios';
 import store from './store/index';
 axios.defaults.baseURL = 'http://47.98.235.117:1337/';
 import Qs from 'qs';
 import VueQuillEditor from 'vue-quill-editor';
 import ImageResize from 'quill-image-resize-module';
+import App from './App'
+import router from './router'
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';

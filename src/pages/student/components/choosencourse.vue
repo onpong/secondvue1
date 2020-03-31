@@ -7,7 +7,7 @@
       <div class="choosencourse-table">
         <el-table
           :data="tableData"
-          stripe
+           border
           style="width: 100%">
           <el-table-column
             prop="teacherName"
@@ -33,7 +33,7 @@
           </el-table-column>
           <el-table-column
             prop="now"
-            label="已选人数">
+            label="已定人数">
           </el-table-column>
 
         </el-table>
@@ -85,9 +85,10 @@ export default {
       border-bottom: 1px solid #ddd
     }
     .choosencourse-table{
-      width:50%;
+      width:70%;
       padding:20px;
       line-height: 10px;
+      
     }
       .choosencourse-title-icon{
         float: left;

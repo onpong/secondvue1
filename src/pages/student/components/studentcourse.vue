@@ -33,13 +33,18 @@
                               {{form.ground}}
                           </el-form-item>
                           <el-form-item label="自我介绍:"  >
-                              <quill-editor 
+                              <!--quill-editor 
                               class="ql-editor-class"
                                     ref="editor1"
                                 v-model="form.description"
                                 :options="editorOption"
                                 @focus="onEditorFocus($event)">
-                            </quill-editor>
+                            </quill-editor>-->
+                            <div class="ql-container ql-snow">
+                                <div class="ql-editor">
+                                    <div v-html="form.description"></div>
+                                </div>
+                            </div>
                           </el-form-item>
               </el-form>
           </div>
@@ -128,18 +133,7 @@
 </script>
 
 <style >
-    .ql-editor-class {
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        line-height: 1.42;
-        height: 800px;
-        outline: none;
-        padding: 0 !important;
-        tab-size: 4;
-        -moz-tab-size: 4;
-        text-align: left;
-        word-wrap: break-word;
-    }
+    
 .teacher-details{
     width:100%;
     height:100%;
@@ -176,26 +170,30 @@
         width:80%;
         text-align:left
       }
+      .ql-container {
+          position: relative;
+          height:800px
+      }
       .personal-pic{
         width:200px;
-        height:200px;
+        height:180px;
         position:absolute;
         right:0px;
         top:50px;
-        z-index:100;
-        border: 1px dashed #d9d9d9;
+        
+       
 
     }
        .head-img{
            width:200px;
-           height:200px
+           height:175px
        }
     .teacher-details-choosebtn{
         width:100px;
-        height:100px;
+        height:50px;
         position: relative;;
         float:right;
-        bottom: -1180px;
+        bottom: -120px;
         z-index:100;
         
     }

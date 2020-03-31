@@ -4,7 +4,7 @@
         <span  class="fncourse-title-icon"></span>
         <span  class="fncourse-title-text">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/courseheader' }">学院年级</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/courseheader' }">学院与年级</el-breadcrumb-item>
           </el-breadcrumb>
         </span>
       </div>
